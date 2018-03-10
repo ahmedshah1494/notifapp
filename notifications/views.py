@@ -29,7 +29,7 @@ def add_notif(request):
 def get_notifs(request):
     # if request.method != 'GET':
     #     return HttpResponse("", status=400)
-    notifs = Notification.objects.all()
+    notifs = Notification.objects.all().reverse()
     notifs = serializers.serialize('json', notifs)
     return HttpResponse(notifs, content_type="applicaion/json")
 
