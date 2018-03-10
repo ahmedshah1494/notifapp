@@ -1,1 +1,1 @@
-web: gunicorn sidra.wsgi --log-file-
+web: gunicorn sidra.wsgi --log-file -
