@@ -9,15 +9,15 @@ from notifications.forms import *
 
 # Create your views here.
 def home(request):
-    if request.method != 'GET':
-        return HttpResponse("", status=400)
+    # if request.method != 'GET':
+    #     return HttpResponse("", status=400)
     context={}
     context['notifForm'] = NotificationForm()
     return render(request,'index.html', context)
 
 def add_notif(request):
-    if request.method != 'POST':
-        return HttpResponse("", status=400)
+    # if request.method != 'POST':
+    #     return HttpResponse("", status=400)
 
     f = NotificationForm(request.POST)
     context = {'notifForm': f}
@@ -27,15 +27,15 @@ def add_notif(request):
     return redirect('/notifs')
 
 def get_notifs(request):
-    if request.method != 'GET':
-        return HttpResponse("", status=400)
+    # if request.method != 'GET':
+    #     return HttpResponse("", status=400)
     notifs = Notification.objects.all()
     notifs = serializers.serialize('json', notifs)
     return HttpResponse(notifs, content_type="applicaion/json")
 
 def accept_notif(request, uid):
-    if request.method != 'GET':
-        return HttpResponse("", status=400)
+    # if request.method != 'GET':
+    #     return HttpResponse("", status=400)
     notif = Notification.objects.get(id=uid)
     notif.delete()
     return redirect('/notifs')
