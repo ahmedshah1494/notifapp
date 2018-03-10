@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notifications</title>
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript">
+        $.getJSON('/notifs/get_notifs', function(data){
+            var notif_div=$(`<div style="outline:thin solid #000">
+                                <h3 id='name'></h3>
+                                <p><u>Room Number</u></p>
+                                <p id='room_num'></p>
+                                <p><u>category</u></p>
+                                <p id='category'></p>
+                                <p><u>Comments</u></p>
+                                <p id='comments'></p>
+                                <a id='accept_button'><button >Accept</button></a>
+                            </div>`)
+            $.each(data, function(i, obj){
+                var new_div=notif_div.clone()
+                var fields=obj['fields']
+                new_div.find('#name').html(fields['name'])
+                new_div.find('#room_num').html(fields['room_num'])
+                new_div.find('#category').html(fields['category'])
+                new_div.find('#comments').html(fields['comments'])
+                new_div.find('#accept_button').attr('href','/notifs/accept_notif/'+obj['pk'])
+                $('#notifs').append(new_div)
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class = 'add_notif_box'>
+        <ul>
+        {% for error in notifForm.non_field_errors %}
+            <li style="color: red">
+            {{ error }}
+            </li>
+        {% endfor %}
+        </ul>
+        {% for field in notifForm.visible_fields %}
+                <tr>
+                  <td class="error2" style="color: red">{{field.errors}}</td>
+                </tr>
+        {% endfor %}
+        <form method="post" action="/notifs/add_notif">
+        
+        {% for field in notifForm.hidden_fields %}
+        {{ field }}
+        {% endfor %}
+        {% for field in notifForm.visible_fields %}
+        <tr>
+          <td><p> {{ field.label }} </p> {{field}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% for field in notifForm.hidden_fields %}
+        {{ field }}
+        {% endfor %}
+        {% csrf_token %}
+        <br>
+        <input type="submit" value="Add Notification"/>
+    </form>
+    <div id='notifs'>
+        
+    </div>
+</div>
+</body>
+</html>
