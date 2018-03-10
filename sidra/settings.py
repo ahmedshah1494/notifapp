@@ -103,6 +103,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        },
+    },
+    'handlers': {
+        # this is what you see in runserver console
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        # this handler logs to file
+        #▼▼▼▼ this is just a name so loggers can reference it
+        'file': {  
+            'class': 'logging.FileHandler',
+            #  choose file location of your liking
+            'filename': os.path.normpath(os.path.join(BASE_DIR, 'django.log')),  
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        # django logger
+        'django': {
+            # log to console and file handlers
+            'handlers': ['console', 'file'],  
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),  # choose verbosity
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
