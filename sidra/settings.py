@@ -131,7 +131,7 @@ LOGGING = {
         'django': {
             # log to console and file handlers
             'handlers': ['console', 'file'],  
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),  # choose verbosity
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),  # choose verbosity
         },
     },
 }
