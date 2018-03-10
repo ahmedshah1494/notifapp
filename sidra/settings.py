@@ -105,35 +105,35 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
-        'standard': {
-            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        'verbose': {
+            'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
+                       'pathname=%(pathname)s lineno=%(lineno)s ' +
+                       'funcname=%(funcName)s %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S'
         },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
     },
     'handlers': {
-        # this is what you see in runserver console
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
         'console': {
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'standard',
-        },
-        # this handler logs to file
-        #▼▼▼▼ this is just a name so loggers can reference it
-        'file': {  
-            'class': 'logging.FileHandler',
-            #  choose file location of your liking
-            'filename': os.path.normpath(os.path.join(BASE_DIR, 'django.log')),  
-            'formatter': 'standard'
-        },
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
-        # django logger
-        'django': {
-            # log to console and file handlers
-            'handlers': ['console', 'file'],  
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),  # choose verbosity
-        },
-    },
+        'testlogger': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
+    }
 }
 
 # Internationalization
