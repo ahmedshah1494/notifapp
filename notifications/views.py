@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from notifications.models import *
 from notifications.forms import *
-import json
+
 # Create your views here.
 def home(request):
     if request.method != 'GET':
