@@ -24,7 +24,20 @@
                 var fields=obj['fields']
                 new_div.find('#name').html(fields['name'])
                 new_div.find('#room_num').html(fields['room_num'])
-                new_div.find('#category').html(fields['category'])
+                switch (fields['category']){
+                    case "pw":
+                        new_div.find('#category').html("Paperwork")
+                        break
+                    case "pr":
+                        new_div.find('#category').html("Printing")
+                        break
+                    case "rf":
+                        new_div.find('#category').html("Refreshments")
+                        break
+                    case default:
+                        new_div.find('#category').html("Paperwork")
+                }
+                
                 new_div.find('#comments').html(fields['comments'])
                 new_div.find('#accept_button').attr('href','/notifs/accept_notif/'+obj['pk'])
                 $('#notifs').append(new_div)
