@@ -19,8 +19,12 @@ def add_notif(request):
     f = NotificationForm(request.POST)
     context = {'notifForm': f}
     if not f.is_valid():
+        if request.META.get('HTTP_USER_AGENT') == "Sidra-Notifications-App":
+            return HttpResponse(status=400)
         return render(request, 'index.html', context)
     new_notif = f.save()
+    if request.META.get('HTTP_USER_AGENT') == "Sidra-Notifications-App":
+        return HttpResponse(status=200)
     return redirect('/notifs')
 
 def get_notifs(request):
